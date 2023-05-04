@@ -4,7 +4,19 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
+    paddingVertical: 20,
+  },
+  content: {
+    height: 200,
     alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 20,
+  },
+  title: {
+    fontSize: 18,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
 });

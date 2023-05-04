@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     color: theme.colors.text,
     textAlign: 'center',
     paddingVertical: 20,
+    fontFamily: 'Inter-Regular',
   },
   inputContainer: {
     justifyContent: 'center',
