@@ -13,7 +13,7 @@ import { styles } from './styles';
 import { Card, Header, NumberContainer } from '../../components/index';
 import { theme } from '../../constants';
 
-const StartGame = () => {
+const StartGame = ({ onStartGame }) => {
   const [numberOption, setNumberOption] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState(null);
@@ -41,7 +41,9 @@ const StartGame = () => {
     setSelectedNumber(null);
   };
 
-  const onHandlerStartGame = () => {};
+  const onHandlerStartGame = () => {
+    onStartGame(selectedNumber);
+  };
 
   const Confirmed = () =>
     confirmed ? (
@@ -55,7 +57,6 @@ const StartGame = () => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <Header title="Welcome" />
         <Text style={styles.title}>Start Game</Text>
         <Card style={styles.inputContainer}>
           <Text style={styles.label}>Write a number</Text>
