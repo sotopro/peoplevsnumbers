@@ -16,7 +16,9 @@ export const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttonContainer: {
+    width: '80%',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    paddingTop: 10,
   },
 });
