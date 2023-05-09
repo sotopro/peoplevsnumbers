@@ -9,6 +9,9 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.white,
   },
+  containerKeyboardAvoidingView: {
+    flex: 1,
+  },
   title: {
     fontSize: 16,
     color: theme.colors.text,
@@ -21,6 +24,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 20,
     height: height * 0.25,
+  },
+  inputContainerLandscape: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 20,
+    height: height * 0.4,
   },
   label: {
     fontSize: 14,
@@ -44,6 +53,13 @@ export const styles = StyleSheet.create({
   },
   confirmedContainer: {
     height: height * 0.25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 40,
+    marginHorizontal: 20,
+  },
+  confirmedContainerLandscape: {
+    height: height * 0.4,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 40,

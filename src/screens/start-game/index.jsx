@@ -7,16 +7,23 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 
 import { styles } from './styles';
 import { Card, Header, NumberContainer } from '../../components/index';
 import { theme } from '../../constants';
+import useOrientation from '../../hooks/useOrientation';
+
+const isAndroid = Platform.OS === 'android';
 
 const StartGame = ({ onStartGame }) => {
   const [numberOption, setNumberOption] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState(null);
+  const { isPortrait } = useOrientation();
 
   const onHandlerChangeText = (text) => {
     setNumberOption(text.replace(/[^0-9]/g, ''));
@@ -47,7 +54,7 @@ const StartGame = ({ onStartGame }) => {
 
   const Confirmed = () =>
     confirmed ? (
-      <Card style={styles.confirmedContainer}>
+      <Card style={isPortrait ? styles.confirmedContainer : styles.confirmedContainerLandscape}>
         <Text style={styles.confirmedTitle}>Selected Number</Text>
         <NumberContainer number={selectedNumber} />
         <Button title="Start Game" onPress={onHandlerStartGame} color={theme.colors.primary} />
@@ -55,35 +62,41 @@ const StartGame = ({ onStartGame }) => {
     ) : null;
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Start Game</Text>
-        <Card style={styles.inputContainer}>
-          <Text style={styles.label}>Write a number</Text>
-          <TextInput
-            placeholder="0"
-            style={styles.input}
-            keyboardType="number-pad"
-            maxLength={2}
-            autoCapitalize="none"
-            autoCorrect={false}
-            blurOnSubmit
-            onChangeText={onHandlerChangeText}
-            value={numberOption}
-          />
-          <View style={styles.buttonContainer}>
-            <Button title="Reset" onPress={onHandlerReset} color={theme.colors.secondary} />
-            <Button
-              title="Confirm"
-              onPress={onHandlerConfirm}
-              color={theme.colors.primary}
-              disabled={numberOption === ''}
-            />
+    <KeyboardAvoidingView
+      behavior={isAndroid ? 'padding' : 'height'}
+      style={styles.containerKeyboardAvoidingView}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <ScrollView style={styles.container}>
+          <View style={styles.container}>
+            <Text style={styles.title}>Start Game</Text>
+            <Card style={isPortrait ? styles.inputContainer : styles.inputContainerLandscape}>
+              <Text style={styles.label}>Write a number</Text>
+              <TextInput
+                placeholder="0"
+                style={styles.input}
+                keyboardType="number-pad"
+                maxLength={2}
+                autoCapitalize="none"
+                autoCorrect={false}
+                blurOnSubmit
+                onChangeText={onHandlerChangeText}
+                value={numberOption}
+              />
+              <View style={styles.buttonContainer}>
+                <Button title="Reset" onPress={onHandlerReset} color={theme.colors.secondary} />
+                <Button
+                  title="Confirm"
+                  onPress={onHandlerConfirm}
+                  color={theme.colors.primary}
+                  disabled={numberOption === ''}
+                />
+              </View>
+            </Card>
+            <Confirmed />
           </View>
-        </Card>
-        <Confirmed />
-      </View>
-    </TouchableWithoutFeedback>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
