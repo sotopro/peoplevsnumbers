@@ -7,23 +7,20 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
-  ScrollView,
   KeyboardAvoidingView,
-  Platform,
+  ScrollView,
 } from 'react-native';
 
 import { styles } from './styles';
-import { Card, Header, NumberContainer } from '../../components/index';
-import { theme } from '../../constants';
+import { Card, NumberContainer } from '../../components/index';
+import { theme, ORIENTATION } from '../../constants';
 import useOrientation from '../../hooks/useOrientation';
-
-const isAndroid = Platform.OS === 'android';
 
 const StartGame = ({ onStartGame }) => {
   const [numberOption, setNumberOption] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState(null);
-  const { isPortrait } = useOrientation();
+  const orientation = useOrientation();
 
   const onHandlerChangeText = (text) => {
     setNumberOption(text.replace(/[^0-9]/g, ''));
@@ -54,23 +51,32 @@ const StartGame = ({ onStartGame }) => {
 
   const Confirmed = () =>
     confirmed ? (
-      <Card style={isPortrait ? styles.confirmedContainer : styles.confirmedContainerLandscape}>
+      <Card
+        style={
+          orientation === ORIENTATION.portrait
+            ? styles.confirmedContainer
+            : styles.confirmedContainerLandscape
+        }>
         <Text style={styles.confirmedTitle}>Selected Number</Text>
         <NumberContainer number={selectedNumber} />
         <Button title="Start Game" onPress={onHandlerStartGame} color={theme.colors.primary} />
       </Card>
     ) : null;
 
-  console.warn('isPortrait', isPortrait);
   return (
-    <KeyboardAvoidingView
-      behavior={isAndroid ? 'padding' : 'height'}
-      style={styles.containerKeyboardAvoidingView}>
-      <ScrollView contentContainerStyle={styles.containerScroll}>
+    <KeyboardAvoidingView behavior="height" style={styles.containerKeyboardAvoidingView}>
+      <ScrollView
+        contentContainerStyle={styles.contentContainerStyle}
+        style={styles.containerScroll}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={styles.container}>
             <Text style={styles.title}>Start Game</Text>
-            <Card style={isPortrait ? styles.inputContainer : styles.inputContainerLandscape}>
+            <Card
+              style={
+                orientation === ORIENTATION.portrait
+                  ? styles.inputContainer
+                  : styles.inputContainerLandscape
+              }>
               <Text style={styles.label}>Write a number</Text>
               <TextInput
                 placeholder="0"

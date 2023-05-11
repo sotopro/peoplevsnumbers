@@ -9,13 +9,24 @@ export const styles = StyleSheet.create({
   },
   content: {
     width: '80%',
+    height: 350,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 0,
   },
+  contentLandscape: {
+    height: 210,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+  },
   image: {
     width: '100%',
     height: 200,
+  },
+  imageLandscape: {
+    width: '50%',
+    height: 190,
   },
   rounds: {
     paddingVertical: 10,
@@ -27,5 +38,14 @@ export const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingVertical: 20,
+  },
+  detailsContainer: {
+    flex: 1,
+  },
+  detailsContainerLandscape: {
+    flex: 1,
+    marginHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

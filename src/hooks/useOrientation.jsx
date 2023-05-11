@@ -1,25 +1,30 @@
-import { useState, useEffect } from 'react';
-import { Dimensions } from 'react-native';
+import * as ScreenOrientation from 'expo-screen-orientation';
+import { useEffect, useState } from 'react';
 
-const useOrientation = () => {
-  const [isPortrait, setIsPortrait] = useState(true);
-
-  const onPortrait = () => {
-    const dim = Dimensions.get('screen');
-    return dim.height >= dim.width;
-  };
-
-  const statePortrait = () => {
-    setIsPortrait(onPortrait);
-  };
+export default function useOrientation() {
+  const [screenOrientation, setScreenOrientation] = useState(
+    ScreenOrientation.Orientation.PORTRAIT_UP
+  );
 
   useEffect(() => {
-    const suscription = Dimensions.addEventListener('change', () => statePortrait);
+    const onOrientationChange = (currentOrientation) => {
+      const orientationValue = currentOrientation.orientationInfo.orientation;
+      setScreenOrientation(orientationValue);
+    };
 
-    return () => suscription.remove();
-  });
+    const initScreenOrientation = async () => {
+      const currentOrientation = await ScreenOrientation.getOrientationAsync();
+      setScreenOrientation(currentOrientation);
+    };
 
-  return { isPortrait };
-};
+    const screenOrientationListener =
+      ScreenOrientation.addOrientationChangeListener(onOrientationChange);
 
-export default useOrientation;
+    initScreenOrientation();
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(screenOrientationListener);
+    };
+  }, []);
+
+  return screenOrientation === 3 || screenOrientation === 4 ? 'LANDSCAPE' : 'PORTRAIT';
+}

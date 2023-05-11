@@ -3,7 +3,7 @@ import { Alert, Button, Text, View } from 'react-native';
 
 import { styles } from './styles';
 import { Card, NumberContainer } from '../../components';
-import { theme } from '../../constants';
+import { ORIENTATION, theme } from '../../constants';
 import useOrientation from '../../hooks/useOrientation';
 
 const MIN_NUMBER = 1;
@@ -29,7 +29,7 @@ const Game = ({ userNumber, onGameOver }) => {
   const currentLow = useRef(MIN_NUMBER);
   const currentHigh = useRef(MAX_NUMBER);
 
-  const { isPortrait } = useOrientation();
+  const orientation = useOrientation();
 
   const onHandlerNextGuess = (direction) => {
     if (
@@ -56,7 +56,7 @@ const Game = ({ userNumber, onGameOver }) => {
 
   return (
     <View style={styles.container}>
-      <Card style={isPortrait ? styles.content : styles.contentLandscape}>
+      <Card style={orientation === ORIENTATION.portrait ? styles.content : styles.contentLandscape}>
         <Text style={styles.title}>Guess a Number</Text>
         <NumberContainer number={currentGuess} />
         <View style={styles.buttonContainer}>
