@@ -14,6 +14,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 20,
   },
+  contentLandscape: {
+    height: height * 0.3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 20,
+  },
   title: {
     fontSize: 18,
   },

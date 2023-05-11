@@ -12,6 +12,9 @@ export const styles = StyleSheet.create({
   containerKeyboardAvoidingView: {
     flex: 1,
   },
+  containerScroll: {
+    flex: 1,
+  },
   title: {
     fontSize: 16,
     color: theme.colors.text,
