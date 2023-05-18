@@ -1,25 +1,34 @@
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { useState, useEffect } from 'react';
-import { Dimensions } from 'react-native';
+
+import { ORIENTATION_NUMBER } from '../constants';
 
 const useOrientation = () => {
-  const [isPortrait, setIsPortrait] = useState(true);
-
-  const onPortrait = () => {
-    const dim = Dimensions.get('screen');
-    return dim.height >= dim.width;
-  };
-
-  const statePortrait = () => {
-    setIsPortrait(onPortrait);
-  };
+  const [screenOrientation, setScreenOrientation] = useState(
+    ScreenOrientation.Orientation.PORTRAIT_UP
+  );
 
   useEffect(() => {
-    const suscription = Dimensions.addEventListener('change', () => statePortrait);
+    const onOrientationChange = (currentOrientation) => {
+      const orientationValue = currentOrientation.orientationInfo.orientation;
+      setScreenOrientation(orientationValue);
+    };
+    const initScreenOrientation = async () => {
+      const currentOrientation = await ScreenOrientation.getOrientationAsync();
+      setScreenOrientation(currentOrientation);
+    };
 
-    return () => suscription.remove();
-  });
+    initScreenOrientation();
 
-  return { isPortrait };
+    const screenOrientationListener =
+      ScreenOrientation.addOrientationChangeListener(onOrientationChange);
+
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(screenOrientationListener);
+    };
+  }, []);
+
+  return ORIENTATION_NUMBER[screenOrientation];
 };
 
 export default useOrientation;

@@ -1,8 +1,6 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { theme } from '../../constants';
-
-const { height, width } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   container: {
@@ -15,6 +13,9 @@ export const styles = StyleSheet.create({
   containerScroll: {
     flex: 1,
   },
+  contentContainerStyle: {
+    flexGrow: 1,
+  },
   title: {
     fontSize: 16,
     color: theme.colors.text,
@@ -26,13 +27,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 20,
-    height: height * 0.25,
+    height: 200,
   },
   inputContainerLandscape: {
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 20,
-    height: height * 0.4,
+    height: 180,
   },
   label: {
     fontSize: 14,
@@ -55,14 +56,14 @@ export const styles = StyleSheet.create({
     marginTop: 20,
   },
   confirmedContainer: {
-    height: height * 0.25,
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 40,
     marginHorizontal: 20,
   },
   confirmedContainerLandscape: {
-    height: height * 0.4,
+    height: 180,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 40,
